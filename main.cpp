@@ -2,12 +2,14 @@
 #include <iostream>
 #include <stack>
 #include <algorithm>
-
+#include <numeric>
 using namespace std;
 
 vector<double> manipulate_vector(vector<double> input_vector)
 {
 	vector<double> ret;
+	vector<double> origin = input_vector;
+	origin.resize(origin.size() / 2);
 
 	sort(input_vector.begin(), input_vector.end());
 	for (int i = 0; i < input_vector.size(); i++)  //sort nel vettore di ritorno
@@ -16,7 +18,12 @@ vector<double> manipulate_vector(vector<double> input_vector)
 	reverse(input_vector.begin(), input_vector.end());
 	for (int i = 0; i < input_vector.size(); i++)  //reverse nel vettore di ritorno
 		ret.push_back(input_vector[i]);
-	//stack<double, vector<double>> sortedVector(input_vector);
+	
+	double sum = accumulate(input_vector.begin(), input_vector.end(), 0);
+	ret.push_back(sum);   //somma degli elementi in ret
+
+	double sum1 = accumulate(origin.begin(), origin.end(), 0);
+	ret.push_back(sum1);   //somma degli elementi della prima metà in ret
 	return ret;
 }
 int main()
